@@ -22,7 +22,7 @@ async function getComentsByFcOuid(condition: GetCommentCondition) {
       ? { createdAt: "desc" as const }
       : { like: "desc" as const }; // 최신순 또는 좋아요 순 정렬
 
-  const comeents = await prisma.comment.findMany({
+  const comments = await prisma.comment.findMany({
     where: {
       fcOuid: condition.fcOuid,
     },
@@ -47,7 +47,7 @@ async function getComentsByFcOuid(condition: GetCommentCondition) {
   });
 
   return {
-    comeents,
+    comments,
     totalCount,
     totalPages: Math.ceil(totalCount / condition.limit),
   };

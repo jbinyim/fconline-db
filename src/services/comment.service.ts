@@ -20,10 +20,10 @@ async function createComment(info: CreateComentInfo) {
 }
 
 async function getComments(condition: GetCommentCondition) {
-  const { comeents, totalCount, totalPages } =
+  const { comments, totalCount, totalPages } =
     await commentRepository.getComentsByFcOuid(condition);
 
-  return { comeents, totalCount, totalPages };
+  return { comments, totalCount, totalPages };
 }
 
 async function deleteComment(commentId: string, userPassword: string) {
