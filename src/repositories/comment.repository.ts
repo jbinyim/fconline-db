@@ -17,10 +17,10 @@ async function create(info: CreateComentInfo) {
 
 async function getComentsByFcOuid(condition: GetCommentCondition) {
   const skip = (condition.offset - 1) * condition.limit; // 2페이지라면 5개 건너뒤고 6개부터 조회
-  const orderBy =
+  const orderBy = // 최신순 또는 좋아요 순 정렬
     condition.category === "desc"
       ? { createdAt: "desc" as const }
-      : { like: "desc" as const }; // 최신순 또는 좋아요 순 정렬
+      : { like: "desc" as const };
 
   const comments = await prisma.comment.findMany({
     where: {

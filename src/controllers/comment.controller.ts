@@ -34,7 +34,7 @@ async function getComments(req: Request, res: Response, next: NextFunction) {
     const { fcOuid } = req.params;
     const category = (req.query.category as "desc" | "popular") || "desc";
     const offset = parseInt(req.query.offset as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 5;
+    const limit = parseInt(req.query.limit as string) || 6;
 
     if (!fcOuid) {
       return res.status(400).json({ error: "fcOuid가 필요합니다!" });
