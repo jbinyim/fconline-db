@@ -5,7 +5,7 @@ async function creasteComment(req: Request, res: Response, next: NextFunction) {
   try {
     const { fcOuid } = req.params;
     const { nickname, text, password } = req.body;
-    const ipAddress = req.ip;
+    const ipAddress = req.clientIp;
 
     if (!nickname || !text || !password || !ipAddress || !fcOuid) {
       return res
@@ -75,8 +75,29 @@ async function deleteComment(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+async function toggleLike(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { commentId } = req.params;
+    const ipAddress = req.clientIp;
+
+    if (!commentId || !ipAddress) {
+      return res.status(400).json({
+        success: false,
+        error: "코멘트가 없습니다.",
+      });
+    }
+
+    const result = await commentService.toggleLike(commentId, ipAddress);
+
+    res.status(201).json(result);
+  } catch (e) {
+    next(e);
+  }
+}
+
 export default {
   creasteComment,
   getComments,
   deleteComment,
+  toggleLike,
 };
