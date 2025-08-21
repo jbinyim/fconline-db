@@ -23,4 +23,17 @@ model Comment {
   ipAddress String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  likes CommentLike[]
+}
+
+model CommentLike {
+  id String @id @default(uuid())
+  commentId String
+  ipAddress String
+  createdAt DateTime @default(now())
+
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, ipAddress])
 }

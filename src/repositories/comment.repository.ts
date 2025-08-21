@@ -73,9 +73,21 @@ async function deleteComment(commentId: string) {
   return comment;
 }
 
+async function findByCommentIdAndIp(commentId: string, ipAddress: string) {
+  return await prisma.commentLike.findUnique({
+    where: {
+      commentId_ipAddress: {
+        commentId,
+        ipAddress,
+      },
+    },
+  });
+}
+
 export default {
   create,
   getComentsByFcOuid,
   findById,
   deleteComment,
+  findByCommentIdAndIp,
 };

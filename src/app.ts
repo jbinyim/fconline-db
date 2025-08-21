@@ -3,7 +3,7 @@ import cors from "cors";
 import commentRouter from "./routers/comment.router";
 import errorHandler from "./middlewares/errorHandler";
 
-const PROT = process.env.PORT;
+const PORT = process.env.PORT;
 
 const app = express();
 
@@ -20,6 +20,6 @@ app.use("/comments", commentRouter);
 
 app.use(errorHandler);
 
-app.listen(PROT, () => {
-  console.log(`✅Server is running ${PROT}`);
+app.listen(PORT, () => {
+  console.log(`✅Server is running ${PORT}`);
 });
