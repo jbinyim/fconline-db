@@ -1,6 +1,6 @@
 import express from "express";
 import commentController from "../controllers/comment.controller";
-import { ipAddressMiddleware } from "../middleware/ipAddressMiddleware";
+import { ipAddressMiddleware } from "../middlewares/ipAddressMiddleware";
 
 const commentRouter = express.Router();
 
