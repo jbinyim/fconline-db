@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import commentRouter from "./routers/comment.router";
 import errorHandler from "./middlewares/errorHandler";
+import eventRouter from "./routers/event.router";
 
 const PORT = process.env.PORT;
 
@@ -17,6 +18,7 @@ app.use(
 app.use(express.json());
 
 app.use("/comments", commentRouter);
+app.use("/events", eventRouter);
 
 app.use(errorHandler);
 
