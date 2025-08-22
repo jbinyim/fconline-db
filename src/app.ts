@@ -5,12 +5,16 @@ import errorHandler from "./middlewares/errorHandler";
 import eventRouter from "./routers/event.router";
 
 const PORT = process.env.PORT;
+const NODE_ENV = process.env.NODE_ENV || "development";
 
 const app = express();
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin:
+      NODE_ENV === "production"
+        ? process.env.FRONTEND_URL
+        : "http://localhost:3000",
     credentials: true,
   })
 );
@@ -23,5 +27,5 @@ app.use("/events", eventRouter);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`✅Server is running ${PORT}`);
+  console.log(`✅Server is running ${PORT} ${NODE_ENV}`);
 });
