@@ -1,24 +1,23 @@
-import * as cheerio from "cheerio";
 import eventRepository from "../repositories/event.repository";
+import { EventItem } from "../types/event.type";
 
 async function getEvents() {
-  const html = await eventRepository.fetchEventList();
-  const $ = cheerio.load(html);
+  let allEvents: EventItem[] = [];
 
-  const events = $(".tbody .tr")
-    .map((_, el) => {
-      const anchor = $(el).find("a");
-      const title = anchor.find(".subject .txt").text().trim();
-      const period = anchor.find(".date").text().trim();
-      const link = anchor.attr("href") ?? "";
-      const img = anchor.find(".thumb img").attr("src");
-      const imgUrl = img?.startsWith("//") ? "https:" + img : img ?? "";
+  for (let i = 1; i <= 4; i++) {
+    const pageEvents = await eventRepository.fetchEventList(i);
+    allEvents = [...allEvents, ...pageEvents];
+  }
 
-      return { title, period, link, imgUrl };
-    })
-    .get();
+  const filterEvents = allEvents.filter((evt) => evt.state.includes("진행"));
 
-  return events;
+  const uniqueEvents = Array.from(
+    new Map(filterEvents.map((evt) => [evt.link, evt])).values()
+  );
+
+  const tatal = uniqueEvents.length;
+
+  return { uniqueEvents, tatal };
 }
 
 export default {
